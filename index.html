@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Evasion Authentic — Majorque</title>
+  <link rel="icon" href="assets/photos/favicon.png" type="image/png">
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600&family=Parisienne&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <img src="assets/photos/logo.png" alt="Evasion Authentic" style="height:44px;width:auto" onerror="this.style.display='none'">
+    <h1>Evasion Authentic</h1>
+  </div>
+  <div class="lang-switch">
+    <label class="muted" data-i18n="lang_label">Langue</label>
+    <select id="lang-switch">
+      <option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option><option value="de">DE</option>
+    </select>
+  </div>
+  <nav>
+    <a href="#accueil" data-tab="accueil" class="active" data-i18n="nav.accueil">Accueil</a>
+    <a href="#lieux" data-tab="lieux" data-i18n="nav.lieux">Lieux</a>
+    <a href="#marches" data-tab="marches" data-i18n="nav.marches">Marchés</a>
+    <a href="#fetes" data-tab="fetes" data-i18n="nav.fetes">Fêtes</a>
+    <a href="#roadtrips" data-tab="roadtrips" data-i18n="nav.roadtrips">Road trips</a>
+    <a href="#excursions" data-tab="excursions" data-i18n="nav.excursions">Excursions</a>
+    <a href="#conciergerie" data-tab="conciergerie" data-i18n="nav.conciergerie">Conciergerie</a>
+  </nav>
+  <div class="searchbox card">
+    <input id="global-search" type="search" placeholder="Rechercher un lieu, une excursion, un road trip…" data-i18n-placeholder="search.placeholder">
+    <div id="search-results" class="card" style="position:absolute;display:none;max-width:520px"></div>
+  </div>
+</header>
+
+<main class="container">
+  <section id="accueil" class="view section active">
+    <div class="hero card">
+      <div class="hero-text">
+        <h2 id="hero-title">Majorque, version authentique</h2>
+        <p id="hero-sub">Road trips détaillés, plus belles plages, points de vue et bonnes adresses. Conciergerie gratuite.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#roadtrips" id="cta-rt">Voir les road trips</a>
+          <a class="btn alt" href="#excursions" id="cta-ex">Excursions</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="assets/photos/Palma-de-Mallorca-et-sa-cathedrale-9.jpg" alt="Palma et sa cathédrale">
+      </div>
+    </div>
+  </section>
+
+  <section id="lieux" class="view section">
+    <h3 data-i18n="lieux.title">Lieux à découvrir</h3>
+    <div class="filters card">
+      <div>
+        <span data-i18n="lieux.zone">Zone</span><br>
+        <select id="filter-zone"></select>
+      </div>
+      <div>
+        <span data-i18n="lieux.type">Type</span><br>
+        <select id="filter-type"></select>
+      </div>
+      <div class="market-toggles">
+        <label class="toggle"><input type="checkbox" id="toggle-markets"> <span data-i18n="lieux.toggle_markets">Afficher les marchés</span></label>
+        <label><span data-i18n="lieux.market_day">Jour de marché</span><br>
+          <select id="filter-market-day">
+            <option value="">—</option>
+            <option>Dimanche</option><option>Lundi</option><option>Mardi</option>
+            <option>Mercredi</option><option>Jeudi</option><option>Vendredi</option><option>Samedi</option>
+          </select>
+        </label>
+        <button class="btn sm" id="btn-market-today" data-i18n="lieux.today">Voir les marchés aujourd’hui</button>
+      </div>
+    </div>
+
+    <div class="card"><div id="map" class="map"></div></div>
+    <div id="lieux-grid" class="grid grid-small"></div>
+  </section>
+
+  <section id="marches" class="view section">
+    <h3 data-i18n="marches.title">Marchés</h3>
+    <div class="filters card">
+      <div><span>Jour</span><br>
+        <select id="mkt-day">
+          <option value="">Tous</option>
+          <option>Dimanche</option><option>Lundi</option><option>Mardi</option>
+          <option>Mercredi</option><option>Jeudi</option><option>Vendredi</option><option>Samedi</option>
+        </select>
+      </div>
+      <div><span>Zone</span><br>
+        <select id="mkt-zone"></select>
+      </div>
+    </div>
+    <div id="mkt-list" class="grid"></div>
+  </section>
+
+  <section id="fetes" class="view section">
+    <h3 data-i18n="fetes.title">Fêtes locales</h3>
+    <div id="fetes-grid" class="grid"></div>
+  </section>
+
+  <section id="roadtrips" class="view section">
+    <h3 data-i18n="rt.title">Road trips conseillés</h3>
+    <div id="rt-grid" class="grid"></div>
+  </section>
+
+  <section id="excursions" class="view section">
+    <h3 data-i18n="ex.title">Réserver nos excursions</h3>
+    <div class="filters card">
+      <label data-i18n="ex.filter">Filtrer par zone</label><br>
+      <select id="filter-ex-zone"></select>
+    </div>
+    <div id="ex-grid" class="grid grid-small"></div>
+  </section>
+
+  <section id="conciergerie" class="view section concierge">
+    <div class="concierge-head">
+      <div class="script">Conciergerie</div>
+      <h3 data-i18n="conc.title">Votre séjour, tout simplement</h3>
+      <p class="muted" data-i18n="conc.subtitle">Service gratuit — dites-nous vos envies, on s’occupe du reste.</p>
+    </div>
+    <div class="concierge-wrap">
+      <div class="card concierge-card">
+        <form name="conciergerie" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="merci.html">
+          <input type="hidden" name="form-name" value="conciergerie">
+          <p style="display:none"><label>Don’t fill this out: <input name="bot-field"></label></p>
+          <div class="row">
+            <div><label>Nom<input name="nom" required></label></div>
+            <div><label>Téléphone / WhatsApp<input name="tel" required placeholder="+34 618 688 798"></label></div>
+          </div>
+          <div class="row">
+            <div><label>Dates du séjour<input name="dates" placeholder="ex: 12 → 18 août"></label></div>
+            <div><label>Budget (€)<input name="budget" type="number" min="0" placeholder="ex: 300"></label></div>
+          </div>
+          <div class="row">
+            <div><label>Activités & envies
+              <select name="prefs" multiple>
+                <option>plages</option><option>points_de_vue</option><option>culture</option>
+                <option>gastro</option><option>famille</option><option>rando</option><option>nightlife</option>
+                <option>cheval</option><option>jet ski</option><option>quad</option><option>montgolfiere</option>
+                <option>degustation</option><option>bateau</option><option>dauphin</option>
+              </select>
+            </label></div>
+            <div><label>Nombre de personnes<input name="personnes" type="number" min="1" placeholder="2 adultes + 1 enfant"></label></div>
+          </div>
+          <label>Message<textarea name="message" placeholder="Itinéraire Nord + voilier 5h — départ proche Palma si possible"></textarea></label>
+          <div class="cta-row">
+            <button class="btn" type="submit" data-i18n="conc.form_send">Envoyer (email)</button>
+            <a class="btn alt" href="#" onclick="openWhatsApp();return false;" data-i18n="conc.wa">Envoyer via WhatsApp</a>
+          </div>
+          <small class="muted">WhatsApp : +34&nbsp;618&nbsp;688&nbsp;798</small>
+        </form>
+      </div>
+      <div class="card concierge-side">
+        <h4 style="margin:.25rem 0" data-i18n="conc.organize">Ce qu’on peut organiser</h4>
+        <ul class="concierge-list">
+          <li>⛵ Voilier 5h (baie de Palma)</li>
+          <li>🏇 Cheval au coucher du soleil</li>
+          <li>🚤 Jet ski & bateaux</li>
+          <li>🛻 Quad & buggy</li>
+          <li>🎈 Montgolfière</li>
+          <li>🍷 Dégustations (vins, huiles)</li>
+          <li>🐬 Sorties dauphins (respect)</li>
+          <li>🗺️ Itinéraires sur mesure</li>
+        </ul>
+        <div style="margin-top:.5rem"><a class="btn alt" href="#excursions">Voir nos excursions</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot muted">
+  © Evasion Authentic — Majorque
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=> navigator.serviceWorker.register('sw.js').catch(console.warn));
+}
+</script>
+</body>
+</html>
