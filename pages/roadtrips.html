@@ -1,0 +1,29 @@
+
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Road trips • Evasion Authentic</title>
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="../css/style.css"/></head>
+<body>
+<header class="topbar"><div class="brand"><a href="../index.html"><img src="../assets/logo.svg" class="logo" alt="Evasion Authentic"/></a></div></header>
+<main>
+  <h1>Road trips</h1>
+  <div class="map-wrap"><div id="map" class="map"></div><button id="enable-map" class="map-overlay">Activer la carte</button></div>
+  <div id="trips" class="cards"></div>
+</main>
+<footer class="footer"><small>© Evasion Authentic — WhatsApp +34 618 688 798</small></footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/common.js"></script>
+<script>
+const map=L.map('map',{scrollWheelZoom:false}).setView([39.73,2.85],9);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
+const layer=L.layerGroup().addTo(map); guardMap(map, document.getElementById('enable-map'));
+const c=document.getElementById('trips');
+function draw(){c.innerHTML=window.APP_DATA.itineraires.map(rt=>{const steps=rt.segments.map(s=>`<li><strong>${s.arret}</strong> — ${s.temps} · ${s.tips}</li>`).join(''); const g='https://www.google.com/maps/dir/'+rt.segments.map(s=>encodeURIComponent(s.arret+' Mallorca')).join('/'); return `<div class="card"><img src="../assets/photos/places/formentor-plage.jpg"><div class="pad"><h3>${rt.titre}</h3><p>${rt.resume}</p><ul>${steps}</ul><div class="links"><button class="cta small" data-id="${rt.id}">Afficher sur la carte</button> <a class="cta" href="${g}" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></div></div></div>`;}).join('');}
+draw();
+c.addEventListener('click',e=>{const b=e.target.closest('button[data-id]'); if(!b) return; const id=b.getAttribute('data-id'); const rt=window.APP_DATA.itineraires.find(t=>t.id===id); if(!rt) return; layer.clearLayers(); const latlngs=[]; rt.segments.forEach(s=>{const c=window.APP_DATA.coords[s.arret]||window.APP_DATA.coords[s.arret.split(' (')[0]]; if(c){latlngs.push([c.lat,c.lng]); L.marker([c.lat,c.lng]).addTo(layer).bindPopup(`<strong>${s.arret}</strong><br>${s.tips}`);} }); if(latlngs.length>1){L.polyline(latlngs,{color:'#117a80',weight:4}).addTo(layer); map.fitBounds(L.latLngBounds(latlngs).pad(0.2));}});
+</script>
+</body></html>

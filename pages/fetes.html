@@ -1,0 +1,20 @@
+
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Fêtes locales • Evasion Authentic</title>
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css"/></head>
+<body>
+<header class="topbar"><div class="brand"><a href="../index.html"><img src="../assets/logo.svg" class="logo" alt="Evasion Authentic"/></a></div></header>
+<main>
+  <h1>Fêtes locales</h1>
+  <div id="list" class="cards"></div>
+</main>
+<footer class="footer"><small>© Evasion Authentic — WhatsApp +34 618 688 798</small></footer>
+<script src="../js/data.js"></script>
+<script>
+const c=document.getElementById('list');
+c.innerHTML = window.APP_DATA.fetes.map(f=>`<div class="card"><div class="pad"><h3>${f.titre}</h3><div class="badge">${f.lieu}</div><p>${f.details}</p></div></div>`).join('');
+</script>
+</body></html>

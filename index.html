@@ -1,144 +1,25 @@
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Evasion Authentic</title>
-  <link rel="icon" href="assets/favicon.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <link rel="stylesheet" href="css/style.css"/>
-</head>
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Evasion Authentic</title>
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"/></head>
 <body>
-<header class="topbar appbar">
-  <div class="brand">
-    <img src="assets/logo.svg" alt="Evasion Authentic" class="logo"/>
-  </div>
-  <button class="burger" aria-label="menu" id="burger">☰</button>
-</header>
-
-<nav id="nav" class="tabbar">
-  <a href="#accueil" data-tab="accueil" class="active">Accueil</a>
-  <a href="#lieux" data-tab="lieux">Lieux</a>
-  <a href="#marches" data-tab="marches">Marchés</a>
-  <a href="#roadtrips" data-tab="roadtrips">Road trips</a>
-  <a href="#excursions" data-tab="excursions">Excursions</a>
-  <a href="#fetes" data-tab="fetes">Fêtes</a>
-  <a href="#conciergerie" data-tab="conciergerie">Conciergerie</a>
-</nav>
-
+<header class="topbar"><div class="brand"><img src="assets/logo.svg" class="logo" alt="Evasion Authentic"/></div></header>
 <main>
-  <!-- ACCUEIL avec cartes de navigation -->
-  <section id="accueil" class="view active">
-    <div class="home-hero">
-      <h1>Evasion Authentic</h1>
-      <p>Votre guide & conciergerie à Majorque</p>
-    </div>
-    <div class="home-grid">
-      <a class="home-card" href="#roadtrips">
-        <img src="assets/photos/places/formentor-plage.jpg" alt="Road trips"><span>Road trips</span>
-      </a>
-      <a class="home-card" href="#lieux">
-        <img src="assets/photos/places/valldemossa.jpg" alt="Lieux"><span>Lieux</span>
-      </a>
-      <a class="home-card" href="#marches">
-        <img src="assets/photos/places/alcudia-remparts.jpg" alt="Marchés"><span>Marchés</span>
-      </a>
-      <a class="home-card" href="#excursions">
-        <img src="assets/photos/excursions/croisiere-voilier-palma.jpg" alt="Excursions"><span>Excursions</span>
-      </a>
-      <a class="home-card" href="#fetes">
-        <img src="assets/photos/places/palma-cathedral.jpg" alt="Fêtes locales"><span>Fêtes locales</span>
-      </a>
-      <a class="home-card" href="#conciergerie">
-        <img src="assets/photos/excursions/majorque-gastronomie-artisanat.jpg" alt="Conciergerie"><span>Conciergerie</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- Lieux (inchangé) -->
-  <section id="lieux" class="view">
-    <div class="map-wrap">
-      <div id="map"></div>
-      <button id="enable-map" class="map-overlay">Activer la carte</button>
-    </div>
-    <div class="panel">
-      <input id="global-search" placeholder="Rechercher un lieu, une plage, un village…"/>
-      <div id="search-results" class="cards"></div>
-      <h2 class="mt">Lieux à découvrir</h2>
-      <div id="places" class="cards small-img"></div>
-    </div>
-  </section>
-
-  <!-- Marchés -->
-  <section id="marches" class="view">
-    <div class="map-wrap">
-      <div id="map-markets"></div>
-      <button id="enable-map-markets" class="map-overlay">Activer la carte</button>
-    </div>
-    <div class="panel">
-      <div class="filters">
-        <label>Jour
-          <select id="filter-jour">
-            <option value="Tous">Tous</option>
-            <option>Lundi</option><option>Mardi</option><option>Mercredi</option>
-            <option>Jeudi</option><option>Vendredi</option><option>Samedi</option><option>Dimanche</option>
-          </select>
-        </label>
-        <label>Zone
-          <select id="filter-zone">
-            <option value="Toutes">Toutes</option>
-            <option>Nord</option><option>Est</option><option>Sud</option><option>Ouest</option><option>Tramuntana</option><option>Intérieur</option>
-          </select>
-        </label>
-        <button id="btn-today">Voir les marchés aujourd'hui</button>
-      </div>
-      <div id="markets" class="cards small-img"></div>
-    </div>
-  </section>
-
-  <!-- Roadtrips -->
-  <section id="roadtrips" class="view">
-    <div class="map-wrap">
-      <div id="map-trips"></div>
-      <button id="enable-map-trips" class="map-overlay">Activer la carte</button>
-    </div>
-    <div class="panel">
-      <div id="trips" class="cards"></div>
-    </div>
-  </section>
-
-  <!-- Excursions -->
-  <section id="excursions" class="view">
-    <p class="note">Opéré par <strong>Evasion Authentic</strong>. WhatsApp : <a id="wa" href="#" target="_blank" rel="noopener"></a></p>
-    <div id="exc-list" class="cards small-img"></div>
-  </section>
-
-  <!-- Fêtes -->
-  <section id="fetes" class="view"><div id="fetes-list" class="cards"></div></section>
-
-  <!-- Conciergerie -->
-  <section id="conciergerie" class="view">
-    <div class="concierge">
-      <h2>Conciergerie gratuite — simplicité totale</h2>
-      <ul class="value">
-        <li>Un seul WhatsApp : <strong>+34 618 688 798</strong></li>
-        <li>Réponse rapide, devis clair, paiement sécurisé</li>
-        <li>Organisation A→Z (voilier 5h, cheval, quad, jet‑ski, montgolfière, dégustations, dauphins…)</li>
-        <li>Conseils météo & affluence · FR/ES/EN/DE</li>
-      </ul>
-      <a id="wa2" class="cta" href="#" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp</a>
-    </div>
-  </section>
+  <div class="home-hero">
+    <h1>Evasion Authentic</h1>
+    <p>Votre guide & conciergerie à Majorque</p>
+  </div>
+  <div class="home-grid">
+    <a class="home-card" href="pages/roadtrips.html"><img src="assets/photos/places/formentor-plage.jpg" alt=""><span>Road trips</span></a>
+    <a class="home-card" href="pages/lieux.html"><img src="assets/photos/places/valldemossa.jpg" alt=""><span>Lieux</span></a>
+    <a class="home-card" href="pages/marches.html"><img src="assets/photos/places/alcudia-remparts.jpg" alt=""><span>Marchés</span></a>
+    <a class="home-card" href="pages/excursions.html"><img src="assets/photos/excursions/croisiere-voilier-palma.jpg" alt=""><span>Excursions</span></a>
+    <a class="home-card" href="pages/fetes.html"><img src="assets/photos/places/palma-cathedral.jpg" alt=""><span>Fêtes locales</span></a>
+    <a class="home-card" href="pages/conciergerie.html"><img src="assets/photos/excursions/majorque-gastronomie-artisanat.jpg" alt=""><span>Conciergerie</span></a>
+  </div>
 </main>
-
-<footer class="footer">
-  <small>© Evasion Authentic — Majorque. WhatsApp <span id="tel"></span></small>
-</footer>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="js/data.js"></script>
-<script src="js/app_v3.js"></script>
-</body>
-</html>
+<footer class="footer"><small>© Evasion Authentic — WhatsApp +34 618 688 798</small></footer>
+</body></html>

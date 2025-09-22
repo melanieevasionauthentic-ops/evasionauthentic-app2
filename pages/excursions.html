@@ -1,0 +1,21 @@
+
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Excursions • Evasion Authentic</title>
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css"/></head>
+<body>
+<header class="topbar"><div class="brand"><a href="../index.html"><img src="../assets/logo.svg" class="logo" alt="Evasion Authentic"/></a></div></header>
+<main>
+  <h1>Excursions premium</h1>
+  <p class="note">Réservez via notre conciergerie WhatsApp : <a href="https://wa.me/34618688798" target="_blank" rel="noopener">+34 618 688 798</a></p>
+  <div id="list" class="cards"></div>
+</main>
+<footer class="footer"><small>© Evasion Authentic — WhatsApp +34 618 688 798</small></footer>
+<script src="../js/data.js"></script>
+<script>
+const c=document.getElementById('list');
+c.innerHTML = window.APP_DATA.excursions_plus.map(e=>`<a class="card" href="${e.url}" target="_blank" rel="noopener"><img src="../${e.img}"><div class="pad"><h3>${e.titre}</h3></div></a>`).join('');
+</script>
+</body></html>
