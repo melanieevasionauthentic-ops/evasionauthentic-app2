@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Evasion Authentic</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <img src="assets/logo.svg" alt="Evasion Authentic" class="logo"/>
+  </div>
+  <button class="burger" aria-label="menu" id="burger">☰</button>
+  <nav id="nav" class="nav">
+    <a href="#accueil" data-tab="accueil" class="active">Accueil</a>
+    <a href="#lieux" data-tab="lieux">Lieux</a>
+    <a href="#marches" data-tab="marches">Marchés</a>
+    <a href="#fetes" data-tab="fetes">Fêtes</a>
+    <a href="#roadtrips" data-tab="roadtrips">Road trips</a>
+    <a href="#excursions" data-tab="excursions">Excursions</a>
+    <a href="#conciergerie" data-tab="conciergerie">Conciergerie</a>
+  </nav>
+</header>
+
+<main>
+  <section id="accueil" class="view active">
+    <div class="hero">
+      <img src="assets/photos/Palma-de-Mallorca-et-sa-cathedrale-9.jpg" alt="Palma et sa cathédrale"/>
+      <div class="hero-text">
+        <h1>Majorque, version authentique</h1>
+        <p>Road trips détaillés, plus belles plages, points de vue, bonnes adresses. Conciergerie gratuite.</p>
+        <a class="cta" href="#roadtrips">Voir les road trips</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="lieux" class="view">
+    <div class="grid two">
+      <div id="map"></div>
+      <div>
+        <input id="global-search" placeholder="Rechercher un lieu, une plage, un village…"/>
+        <div id="search-results" class="cards"></div>
+        <h2 class="mt">Lieux à découvrir</h2>
+        <div id="places" class="cards"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="marches" class="view">
+    <div class="filters">
+      <label>Jour
+        <select id="filter-jour">
+          <option value="Tous">Tous</option>
+          <option>Lundi</option><option>Mardi</option><option>Mercredi</option>
+          <option>Jeudi</option><option>Vendredi</option><option>Samedi</option><option>Dimanche</option>
+        </select>
+      </label>
+      <label>Zone
+        <select id="filter-zone">
+          <option value="Toutes">Toutes</option>
+          <option>Nord</option><option>Est</option><option>Sud</option><option>Ouest</option><option>Centre</option><option>Divers</option>
+        </select>
+      </label>
+      <button id="btn-today">Voir les marchés aujourd'hui</button>
+    </div>
+    <div id="markets" class="cards"></div>
+  </section>
+
+  <section id="fetes" class="view">
+    <div id="fetes-list" class="cards"></div>
+  </section>
+
+  <section id="roadtrips" class="view">
+    <div id="trips" class="cards"></div>
+  </section>
+
+  <section id="excursions" class="view">
+    <p class="note">Toutes les excursions sont opérées par <strong>Evasion Authentic</strong>. Concierge WhatsApp : <a id="wa" href="#" target="_blank" rel="noopener"></a></p>
+    <div id="exc-list" class="cards"></div>
+  </section>
+
+  <section id="conciergerie" class="view">
+    <div class="concierge">
+      <h2>Conciergerie gratuite</h2>
+      <p>Voilier 5h, cheval, jet-ski, quad, montgolfière, dégustations, bateau, dauphins… On s’occupe des réservations.</p>
+      <a id="wa2" class="cta" href="#" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <small>© Evasion Authentic — Majorque. WhatsApp <span id="tel"></span></small>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
