@@ -23,3 +23,10 @@ main{padding:18px}
 .filters select,input{padding:8px;border-radius:10px;border:1px solid #dbe4e2;background:#fff}
 .badge{display:inline-block;background:#eef7f7;color:var(--teal);padding:2px 8px;border-radius:999px;font-size:12px;margin-right:6px}
 .footer{padding:18px;text-align:center;color:#64748b}
+
+
+/* Top navigation across pages */
+.topnav{display:flex;flex-wrap:wrap;gap:10px;align-items:center; background:#fff; border-bottom:1px solid #e6ecea; padding:8px 14px; position:sticky; top:58px; z-index:49}
+.topnav a{padding:8px 12px; border-radius:999px; background:#f2f7f6; color:#0f4a4e; text-decoration:none; font-weight:600}
+.topnav a:hover{background:#117a80; color:#fff}
+@media (max-width:900px){.topnav{top:54px; gap:8px} .topnav a{padding:8px 10px}}

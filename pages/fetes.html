@@ -7,6 +7,16 @@
 <link rel="stylesheet" href="../css/style.css"/></head>
 <body>
 <header class="topbar"><div class="brand"><a href="../index.html"><img src="../assets/logo.svg" class="logo" alt="Evasion Authentic"/></a></div></header>
+<nav class="topnav">
+  <a href="../index.html">Accueil</a>
+  <a href="../pages/lieux.html">Lieux</a>
+  <a href="../pages/marches.html">Marchés</a>
+  <a href="../pages/roadtrips.html">Road trips</a>
+  <a href="../pages/excursions.html">Excursions</a>
+  <a href="../pages/fetes.html">Fêtes</a>
+  <a href="../pages/conciergerie.html">Conciergerie</a>
+</nav>
+
 <main>
   <h1>Fêtes locales</h1>
   <div id="list" class="cards"></div>
@@ -16,5 +26,14 @@
 <script>
 const c=document.getElementById('list');
 c.innerHTML = window.APP_DATA.fetes.map(f=>`<div class="card"><div class="pad"><h3>${f.titre}</h3><div class="badge">${f.lieu}</div><p>${f.details}</p></div></div>`).join('');
+</script>
+
+<script>
+if(!window.APP_DATA){
+  const warn=document.createElement('p');
+  warn.style.color='#b91c1c';
+  warn.textContent='(Données introuvables : vérifiez que js/data.js est bien à la racine du site)';
+  document.currentScript.parentElement.appendChild(warn);
+}
 </script>
 </body></html>
