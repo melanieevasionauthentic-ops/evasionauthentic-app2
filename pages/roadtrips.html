@@ -1,0 +1,42 @@
+<!doctype html><html lang='fr'><head><title>Road trips – EA</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/css/style.css">
+<script defer src="/js/common.js"></script><script defer src="/js/data.js"></script></head><body><div class="nav"><div class="nav-inner container">
+  <a class="brand" href="/index.html"><img class="logo" src="/assets/img/logo.svg" alt="logo"><strong>Evasion Authentic</strong></a>
+  <div style="flex:1"></div>
+  <a class="link" href="/index.html">Accueil</a>
+  <a class="link" href="/pages/excursions.html">Excursions</a>
+  <a class="link" href="/pages/roadtrips.html">Road trips</a>
+  <a class="link" href="/pages/marches.html">Marchés</a>
+  <a class="link" href="/pages/fetes.html">Fêtes</a>
+  <a class="link" href="/pages/lieux.html">Lieux</a>
+  <a class="link" href="/pages/conciergerie.html">Conciergerie</a>
+</div></div><div class='container page'>
+<h1>Road trips (10)</h1><p class="small">Durée, arrêts (plages, vues, restos), carte à la demande et lien Google Maps.</p>
+<div class="list" id="list"></div>
+<script>
+async function showMap(id, arr){
+  await ensureLeaflet();
+  const wrap=document.getElementById('map-'+id);
+  wrap.innerHTML='<div class="map" id="leaf-'+id+'"></div>';
+  const map=L.map('leaf-'+id).setView([39.7,3.0],8);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19, attribution:'© OpenStreetMap'}).addTo(map);
+  const pts=[];
+  arr.forEach(s=>{ if(s.lat){ const ll=L.latLng(s.lat,s.lon); pts.push(ll); L.marker(ll).addTo(map).bindPopup('<b>'+s.nom+'</b><br>'+(s.note||'')); }});
+  if(pts.length) map.fitBounds(L.latLngBounds(pts),{padding:[20,20]});
+}
+function badge(t){ const m={plage:'Plage',vue:'Vue',resto:'Resto',culture:'Culture',village:'Village',rando:'Rando',glacier:'Glacier',tip:'Astuce'}; return m[t]||t; }
+document.addEventListener('DOMContentLoaded',()=>{
+  const box=qs('#list');
+  DATA.roadtrips.forEach(rt=>{
+    const el=document.createElement('div'); el.className='item';
+    el.innerHTML=`<h3>${rt.titre} <span class="badge">${rt.duree}</span></h3>
+      <p class="small">${rt.resume||''}</p>
+      <div>${(rt.arrets||[]).map(s=>`<span class='badge'>${badge(s.type)}</span> ${s.nom}`).join(' • ')}</div>
+      <p><a class="btn" href="${rt.gmaps}" target="_blank">Google Maps</a>
+      &nbsp;<a class="btn" onclick='showMap("${rt.id}", DATA.roadtrips.find(r=>r.id=="${rt.id}").arrets)'>Voir sur la carte</a></p>
+      <div id="map-${rt.id}" class="mapWrap"></div>`;
+    box.appendChild(el);
+  });
+});
+</script>
+</div></body></html>
