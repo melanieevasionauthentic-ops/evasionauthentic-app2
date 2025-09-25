@@ -1,0 +1,28 @@
+<!doctype html><html lang="fr"><head>
+<title>Restaurants — EA</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="../assets/img/favicon.png" type="image/png"><link rel="stylesheet" href="../css/style.css">
+<script defer src="../js/common.js"></script><script defer src="../js/data.js"></script></head>
+<body><div class="container"><h1>Restaurants</h1>
+<p class="small">Sélection issue de nos road trips (repères sûrs, cuisine locale ou mer).</p>
+<div class="item"><button class="btn" id="btnMap">Voir tous sur la carte</button></div>
+<div class="list" id="list"></div><div id="mapWrap"></div></div>
+<script>
+function render(){
+  const box=document.getElementById('list'); box.innerHTML='';
+  DATA.restaurants.forEach(r=>{
+    const el=document.createElement('div'); el.className='item';
+    el.innerHTML='<h3>🍽️ '+r.nom+'</h3><p>'+(r.note||'')+'</p><p class="small">Itinéraire : '+r.rt+'</p>';
+    box.appendChild(el);
+  });
+}
+async function showMap(){
+  await ensureLeaflet();
+  document.getElementById('mapWrap').innerHTML='<div class="map" id="map"></div>';
+  const m=L.map('map').setView([39.7,3.0],8);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19, attribution:'© OpenStreetMap'}).addTo(m);
+  const pts=[]; DATA.restaurants.forEach(x=>{ if(x.lat){ const ll=L.latLng(x.lat,x.lon); pts.push(ll); L.marker(ll).addTo(m).bindPopup('<b>🍽️ '+x.nom+'</b><br>'+(x.note||'')); } });
+  if(pts.length) m.fitBounds(L.latLngBounds(pts),{padding:[20,20]});
+}
+document.addEventListener('DOMContentLoaded',()=>{ render(); document.getElementById('btnMap').onclick=showMap; });
+</script>
+</body></html>

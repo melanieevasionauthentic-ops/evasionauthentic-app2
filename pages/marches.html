@@ -1,0 +1,35 @@
+<!doctype html><html lang="fr"><head>
+<title>Marchés — EA</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="../assets/img/favicon.png" type="image/png"><link rel="stylesheet" href="../css/style.css">
+<script defer src="../js/common.js"></script><script defer src="../js/data.js"></script></head>
+<body><div class="container"><h1>Marchés & jours</h1>
+<div class="item">
+  <label>Jour: 
+    <select id="jour"><option>Tous</option><option>Lundi</option><option>Mardi</option><option>Mercredi</option><option>Jeudi</option><option>Vendredi</option><option>Samedi</option><option>Dimanche</option></select>
+  </label>
+  <button class="btn" id="btnList">Lister</button>
+  <button class="btn secondary" id="btnMap">Voir sur la carte</button>
+</div>
+<div class="list" id="list"></div>
+<div id="mapWrap"></div></div>
+<script>
+function renderList(){
+  const j=document.getElementById('jour').value;
+  const arr=DATA.marches.filter(m=> j==='Tous' || m.jour===j);
+  const box=document.getElementById('list'); box.innerHTML='';
+  arr.forEach(m=>{ const el=document.createElement('div'); el.className='item';
+    el.innerHTML='<h3>'+m.ville+' <span class="badge">'+m.jour+'</span></h3><p class="small">'+(m.zone||'')+'</p>'; box.appendChild(el); });
+}
+async function showMap(){
+  await ensureLeaflet();
+  const j=document.getElementById('jour').value;
+  const arr=DATA.marches.filter(m=> j==='Tous' || m.jour===j);
+  document.getElementById('mapWrap').innerHTML='<div id="map" class="map"></div>';
+  const m=L.map('map').setView([39.7,3.0],8);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19, attribution:'© OpenStreetMap'}).addTo(m);
+  const pts=[]; arr.forEach(x=>{ const ll=L.latLng(x.lat,x.lon); pts.push(ll); L.marker(ll).addTo(m).bindPopup('<b>'+x.ville+'</b><br>'+x.jour+' — '+(x.zone||'')); });
+  if(pts.length) m.fitBounds(L.latLngBounds(pts),{padding:[20,20]});
+}
+document.addEventListener('DOMContentLoaded',()=>{ renderList(); document.getElementById('btnList').onclick=renderList; document.getElementById('btnMap').onclick=showMap; });
+</script>
+</body></html>

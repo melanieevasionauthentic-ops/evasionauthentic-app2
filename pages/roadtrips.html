@@ -1,0 +1,41 @@
+<!doctype html><html lang="fr"><head>
+<title>Road trips — EA</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="../assets/img/favicon.png" type="image/png">
+<link rel="stylesheet" href="../css/style.css">
+<script defer src="../js/common.js"></script>
+<script defer src="../js/data.js"></script></head><body>
+<div class="container"><h1>Road trips (10)</h1>
+<p class="small">Durée, arrêts (plages, restos, glaciers, spots photo). Lien Google Maps et carte interactive.</p>
+<div class="list" id="list"></div></div>
+<script>
+async function showMap(id, arrets){
+  await ensureLeaflet();
+  const wrap=document.getElementById('map-'+id);
+  wrap.innerHTML='<div class="map" id="leaf-'+id+'"></div>';
+  const m=L.map('leaf-'+id).setView([39.7,3.0],8);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19, attribution:'© OpenStreetMap'}).addTo(m);
+  const pts=[];
+  arrets.forEach(s=>{ if(s.lat){ const ll=L.latLng(s.lat,s.lon); pts.push(ll);
+    const emoji={'plage':'🏖️','resto':'🍽️','glacier':'🍦','photo':'📷','vue':'👀','village':'🏘️','culture':'🏛️','rando':'🥾'}[s.type]||'📍';
+    L.marker(ll).addTo(m).bindPopup('<b>'+emoji+' '+s.nom+'</b><br>'+(s.note||'')); } });
+  if(pts.length) m.fitBounds(L.latLngBounds(pts),{padding:[20,20]});
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const box=document.getElementById('list');
+  DATA.roadtrips.forEach(rt=>{
+    const typeMap = { 'plage':'Plage','resto':'Resto','glacier':'Glacier','photo':'Spot photo','vue':'Vue','village':'Village','culture':'Culture','rando':'Rando' };
+    const tags=(rt.arrets||[]).map(s=>'<span class="badge">'+s.type+'</span>').join(' ');
+    const stops=(rt.arrets||[]).map(s=>'<li><strong>'+s.nom+'</strong> — '+(s.note||'')+' <span class="small">('+(typeMap[s.type]||s.type)+')</span></li>').join('');
+    const el=document.createElement('div'); el.className='item';
+    el.innerHTML='<h3>'+rt.titre+' <span class="badge">'+rt.duree+'</span></h3>'
+      +'<p class="small">'+(rt.resume||'')+'</p>'
+      +'<div>'+tags+'</div>'
+      +'<ul>'+stops+'</ul>'
+      +'<p><a class="btn" href="'+rt.gmaps+'" target="_blank">Google Maps</a> &nbsp;'
+      +'<a class="btn secondary" onclick="showMap(\''+rt.id+'\', DATA.roadtrips.find(r=>r.id==\''+rt.id+'\').arrets)">Voir sur la carte</a></p>'
+      +'<div id="map-'+rt.id+'"></div>';
+    box.appendChild(el);
+  });
+});
+</script>
+</body></html>

@@ -1,0 +1,17 @@
+<!doctype html><html lang="fr"><head>
+<title>Fêtes locales — EA</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="../assets/img/favicon.png" type="image/png"><link rel="stylesheet" href="../css/style.css">
+<script defer src="../js/common.js"></script><script defer src="../js/data.js"></script></head>
+<body><div class="container"><h1>Fêtes locales</h1>
+<div class="list" id="list"></div></div>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const box=document.getElementById('list');
+  DATA.fetes.forEach(f=>{
+    const el=document.createElement('div'); el.className='item';
+    el.innerHTML='<h3>'+f.nom+' <span class="badge">'+f.periode+'</span></h3><p><strong>'+f.lieu+'</strong> — '+f.desc+'</p>';
+    box.appendChild(el);
+  });
+});
+</script>
+</body></html>
