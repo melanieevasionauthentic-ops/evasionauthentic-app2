@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Road trips — Evasion Authentic</title>
+<link rel="icon" href="/evasionauthentic-app2/assets/img/favicon.png">
+<link rel="stylesheet" href="/evasionauthentic-app2/css/style.css"/>
+</head><body>
+<header class="header"></header>
+<h1 class="title">Road trips</h1>
+<div class="container">
+<p>10 itinéraires à venir. Voici 3 exemples :</p>
+<div class="list" id="rtList"></div>
+<script>
+const rtb=document.getElementById('rtList');
+APP.roadtrips.forEach(rt=>{
+  rtb.innerHTML += `<div class="item"><h3>${rt.titre}</h3>
+  <p><span class="badge">Durée ${rt.duree}</span></p>
+  <p>${rt.resume}</p>
+  <p><a href="${rt.gmap}" target="_blank" rel="noopener">Ouvrir l’itinéraire Google Maps</a></p></div>`;
+});
+</script>
+</div>
+<footer class="footer small">© Evasion Authentic</footer>
+<script src="/evasionauthentic-app2/js/common.js"></script>
+<script src="/evasionauthentic-app2/js/data.js"></script>
+<script>header('Road trips')</script>
+</body></html>

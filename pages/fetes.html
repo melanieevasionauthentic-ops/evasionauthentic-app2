@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Fêtes locales — Evasion Authentic</title>
+<link rel="icon" href="/evasionauthentic-app2/assets/img/favicon.png">
+<link rel="stylesheet" href="/evasionauthentic-app2/css/style.css"/>
+</head><body>
+<header class="header"></header>
+<h1 class="title">Fêtes locales</h1>
+<div class="container">
+<p>Fêtes majeures avec repères historiques :</p>
+<div class="list" id="fList"></div>
+<script>
+const fb=document.getElementById('fList');
+APP.fetes.forEach(f=>{
+  fb.innerHTML += `<div class="item"><h3>${f.nom}</h3>
+  <p><span class="badge">${f.date}</span></p>
+  <p>${f.lieu}</p><p class="small">${f.note}</p></div>`;
+});
+</script>
+</div>
+<footer class="footer small">© Evasion Authentic</footer>
+<script src="/evasionauthentic-app2/js/common.js"></script>
+<script src="/evasionauthentic-app2/js/data.js"></script>
+<script>header('Fêtes')</script>
+</body></html>
